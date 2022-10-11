@@ -60,7 +60,7 @@ export default {
         cameraMaxDistance
       );
 
-      camera.position.set(0, 0, 100);
+      camera.position.set(0, 0, 1);
 
       // 添加场景及颜色
       scene = new THREE.Scene();
@@ -122,7 +122,7 @@ export default {
             child.userData.parent = object;
           });
           // 设置object position
-          object.position.set(5458, - 411 * 2 - 300, -4096 - 300 * 1.2);
+          object.position.set(3052+ 430/2 + 581/2, - 411 * 2 - 300, -600/2);
           // object.position.set(0, 0, 0);
           object.rotation.set(0, -Math.PI / 2, 0);
           // 添加object到场景里
@@ -283,7 +283,7 @@ export default {
 
              vec4 temp = pixel1 - pixel;
              float alpha = temp.x * temp.x + temp.y * temp.y + temp.z * temp.z;
-             if(alpha < 0.05) {
+             if(alpha < 0.003) {
               alpha = 1.0;
              }else {
               alpha = 0.0;
@@ -311,7 +311,7 @@ export default {
         }
       }
       const skyBox1 = new THREE.Mesh(
-        new THREE.BoxGeometry(6000, 6000, 6000),
+        new THREE.BoxGeometry(1000, 1000, 1000),
         materials1
       );
       skyBox1.geometry.scale(1, 1, -1);
