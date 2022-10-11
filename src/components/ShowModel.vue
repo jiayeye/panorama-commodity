@@ -146,22 +146,22 @@ export default {
       // nz = back
       const textures = [];
       const px = new THREE.TextureLoader().load(
-        "/withoutXYJ/_r.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_r.jpg"
       );
       const nx = new THREE.TextureLoader().load(
-        "/withoutXYJ/_l.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_l.jpg"
       );
       const py = new THREE.TextureLoader().load(
-        "/withoutXYJ/_u.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_u.jpg"
       );
       const ny = new THREE.TextureLoader().load(
-        "/withoutXYJ/_d.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_d.jpg"
       );
       const pz = new THREE.TextureLoader().load(
-        "/withoutXYJ/_f.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_f.jpg"
       );
       const nz = new THREE.TextureLoader().load(
-        "/withoutXYJ/_b.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_b.jpg"
       );
       textures.push(px);
       textures.push(nx);
@@ -191,22 +191,22 @@ export default {
       // nz = back
       const textures1 = [];
       const px1 = new THREE.TextureLoader().load(
-        "/withXYJ/_r.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_r.jpg"
       );
       const nx1 = new THREE.TextureLoader().load(
-        "/withXYJ/_l.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_l.jpg"
       );
       const py1 = new THREE.TextureLoader().load(
-        "/withXYJ/_u.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_u.jpg"
       );
       const ny1 = new THREE.TextureLoader().load(
-        "/withXYJ/_d.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_d.jpg"
       );
       const pz1 = new THREE.TextureLoader().load(
-        "/withXYJ/_f.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_f.jpg"
       );
       const nz1 = new THREE.TextureLoader().load(
-        "/withXYJ/_b.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_b.jpg"
       );
       textures1.push(px1);
       textures1.push(nx1);
@@ -288,8 +288,8 @@ export default {
 
       const gui = new GUI();
       gui
-        .add(option, "threshold", 0.001, 0.2)
-        .step(0.001)
+        .add(option, "threshold", 0.0001, 0.1)
+        .step(0.0001)
         .onChange((value) => {
           if(customMat) {
             customMat.uniforms.threshold.value = value;
