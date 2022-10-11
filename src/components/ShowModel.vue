@@ -13,6 +13,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { OutlineEffect } from "three/examples/jsm/effects/OutlineEffect";
+import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
 let camera,
   scene,
@@ -25,6 +26,9 @@ let camera,
   effect,
   raycaster;
 
+const option = {
+  threshold: 0.003,
+};
 export default {
   props: {
     modelUrl: {
@@ -110,7 +114,7 @@ export default {
       // 加载进度manager
       const manager = new THREE.LoadingManager();
       const loader = new FBXLoader(manager);
-      // 除湿机
+      // 洗衣机
       loader.load(
         "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/save_fbx/CF067T004-海尔-滚筒-干衣机-10kg-HGS100-306.fbx",
         (object) => {
@@ -122,7 +126,7 @@ export default {
             child.userData.parent = object;
           });
           // 设置object position
-          object.position.set(3052+ 430/2 + 581/2, - 411 * 2 - 300, -600/2);
+          object.position.set(3052 + 430 / 2 + 581 / 2, - 411 * 2 - 300, -600 / 2);
           // object.position.set(0, 0, 0);
           object.rotation.set(0, -Math.PI / 2, 0);
           // 添加object到场景里
@@ -131,48 +135,9 @@ export default {
         }
       );
 
-      // 体脂秤
-      loader.load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/save_fbx/JM03F400Y-模型.fbx",
-        (object) => {
-          object.traverse((child) => {
-            if (child.isMesh) {
-              child.castShadow = false;
-              child.receiveShadow = false;
-            }
-            child.userData.parent = object;
-          });
-          // 设置object position
-          object.position.set(700, -930, -2300);
 
 
-
-          // 添加object到场景里
-          // scene.add(object);
-          // objects.push(object);
-        }
-      );
-
-      // 电视
-      loader.load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/save_fbx/DH1UN0A02-模型1.fbx",
-        (object) => {
-          object.traverse((child) => {
-            if (child.isMesh) {
-              child.castShadow = false;
-              child.receiveShadow = false;
-            }
-            child.userData.parent = object;
-          });
-          // 设置object position
-          object.position.set(1760, 95, -1790);
-
-          // 添加object到场景里
-          // scene.add(object);
-          // objects.push(object);
-        }
-      );
-
+     
       // px = right
       // nx = left
       // py = top
@@ -267,7 +232,9 @@ export default {
         return `
           uniform sampler2D  tex; 
           uniform sampler2D  tex1; 
+          uniform float threshold;
           varying vec2 vUv;
+          
 
           void main() {
             vec4 pixel = texture2D(tex, vUv);
@@ -283,7 +250,7 @@ export default {
 
              vec4 temp = pixel1 - pixel;
              float alpha = temp.x * temp.x + temp.y * temp.y + temp.z * temp.z;
-             if(alpha < 0.003) {
+             if(alpha < threshold) {
               alpha = 1.0;
              }else {
               alpha = 0.0;
@@ -294,18 +261,20 @@ export default {
           }
         `
       }
+      let customMat;
       for (let i = 0; i < 6; i++) {
         if (i === 0) {
           let uniforms = {
             tex: { type: 't', value: textures[i] },
-            tex1: { type: 't', value: textures1[i] }
+            tex1: { type: 't', value: textures1[i] },
+            threshold: { value: option.threshold }
           };
-          let material = new THREE.ShaderMaterial({
+          customMat = new THREE.ShaderMaterial({
             uniforms: uniforms,
             fragmentShader: fragmentShader(),
             vertexShader: vertexShader(),
           });
-          materials1.push(material);
+          materials1.push(customMat);
         } else {
           materials1.push(new THREE.MeshBasicMaterial({ map: textures1[i] }));
         }
@@ -317,7 +286,15 @@ export default {
       skyBox1.geometry.scale(1, 1, -1);
       scene.add(skyBox1);
 
-
+      const gui = new GUI();
+      gui
+        .add(option, "threshold", 0.001, 0.2)
+        .step(0.001)
+        .onChange((value) => {
+          if(customMat) {
+            customMat.uniforms.threshold.value = value;
+          }
+        });
 
       // 创建线框效果
       effect = new OutlineEffect(renderer, {
