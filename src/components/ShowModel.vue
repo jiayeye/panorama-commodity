@@ -18,13 +18,17 @@ import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 let camera,
   scene,
   scene_selectObjects,
+  scene_front,
   renderer,
   controls,
   tickId,
   scale,
   objects,
   effect,
-  raycaster;
+  raycaster,
+  skyboxFront,
+  skyboxBack
+  ;
 
 const option = {
   threshold: 0.003,
@@ -71,6 +75,7 @@ export default {
       // scene.background = new THREE.Color(0xffffff);
 
       scene_selectObjects = new THREE.Scene();
+      scene_front = new THREE.Scene();
       // scene_selectObjects.background = new THREE.Color(0xffffff);
 
       // 添加光源
@@ -82,6 +87,10 @@ export default {
       hemiLight1.position.set(0, 2000, 0);
       hemiLight1.intensity = 0.8;
       scene_selectObjects.add(hemiLight1);
+      const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
+      hemiLight1.position.set(0, 2000, 0);
+      hemiLight1.intensity = 0.8;
+      scene_front.add(hemiLight2);
 
       // 设置直射光
       const dirLight = new THREE.DirectionalLight(0xdddddd);
@@ -94,6 +103,16 @@ export default {
       dirLight1.intensity = 0.2;
       dirLight1.position.set(0, 1000, 1000);
       scene_selectObjects.add(dirLight1);
+      const dirLight2 = new THREE.DirectionalLight(0xdddddd);
+      dirLight1.castShadow = false;
+      dirLight1.intensity = 0.2;
+      dirLight1.position.set(0, 1000, 1000);
+      scene_front.add(dirLight2);
+
+
+
+   
+
 
       // 添加WebGLRenderer，设置size
       renderer = new THREE.WebGLRenderer({
@@ -126,16 +145,15 @@ export default {
             child.userData.parent = object;
           });
           // 设置object position
-          object.position.set(3052 + 430 / 2 + 581 / 2, - 411 * 2 - 300, -600 / 2);
+          object.position.set(3052 + 430 / 2 + 581 / 2, - 411 * 2 - 180, -600 / 2);
           // object.position.set(0, 0, 0);
           object.rotation.set(0, -Math.PI / 2, 0);
+          object.name = 'newModel';
           // 添加object到场景里
           scene.add(object);
           objects.push(object);
         }
       );
-
-
 
      
       // px = right
@@ -173,12 +191,12 @@ export default {
       for (let i = 0; i < 6; i++) {
         materials.push(new THREE.MeshBasicMaterial({ map: textures[i] }));
       }
-      const skyBox = new THREE.Mesh(
+      const skyboxBack = new THREE.Mesh(
         new THREE.BoxGeometry(12000, 12000, 12000),
         materials
       );
-      skyBox.geometry.scale(1, 1, -1);
-      scene.add(skyBox);
+      skyboxBack.geometry.scale(1, 1, -1);
+      scene.add(skyboxBack);
 
 
 
@@ -191,7 +209,7 @@ export default {
       // nz = back
       const textures1 = [];
       const px1 = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_r.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_r_2022.10.25.png"
       );
       const nx1 = new THREE.TextureLoader().load(
         "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_l.jpg"
@@ -234,30 +252,25 @@ export default {
           uniform sampler2D  tex1; 
           uniform float threshold;
           varying vec2 vUv;
-          
-
+        
           void main() {
-            vec4 pixel = texture2D(tex, vUv);
-            vec4 pixel1 = texture2D(tex1, vUv);
-
-            // float alpha = 1.0;
-            // if(pixel.x == pixel1.x && pixel.y == pixel1.y && pixel.z == pixel1.z) {
+            vec4 pixel = texture2D(tex1, vUv);
+            // vec4 pixel1 = texture2D(tex1, vUv);
+            //  vec4 temp = pixel1 - pixel;
+            //  float alpha = temp.x * temp.x + temp.y * temp.y + temp.z * temp.z;
+            //  if(alpha < threshold) {
             //   alpha = 1.0;
             //  }else {
             //   alpha = 0.0;
             //   // discard;
             //  }
 
-             vec4 temp = pixel1 - pixel;
-             float alpha = temp.x * temp.x + temp.y * temp.y + temp.z * temp.z;
-             if(alpha < threshold) {
-              alpha = 1.0;
-             }else {
-              alpha = 0.0;
-              discard;
-             }
-           
-            gl_FragColor = vec4(pixel.xyz, alpha);
+            // if(pixel.w < 0.95) {
+            //   discard;
+            // }
+            // gl_FragColor = vec4(pixel.xyz, 1);
+
+            gl_FragColor = pixel;
           }
         `
       }
@@ -274,27 +287,30 @@ export default {
             fragmentShader: fragmentShader(),
             vertexShader: vertexShader(),
           });
+          // 设置半透明模式
+          customMat.transparent = true;
           materials1.push(customMat);
         } else {
           materials1.push(new THREE.MeshBasicMaterial({ map: textures1[i] }));
         }
       }
-      const skyBox1 = new THREE.Mesh(
+      const skyboxFront = new THREE.Mesh(
         new THREE.BoxGeometry(1000, 1000, 1000),
         materials1
       );
-      skyBox1.geometry.scale(1, 1, -1);
-      scene.add(skyBox1);
+      skyboxFront.geometry.scale(1, 1, -1);
+      // scene_selectObjects.add(skyboxFront);
+      scene_front.add(skyboxFront);
 
-      const gui = new GUI();
-      gui
-        .add(option, "threshold", 0.0001, 0.1)
-        .step(0.0001)
-        .onChange((value) => {
-          if(customMat) {
-            customMat.uniforms.threshold.value = value;
-          }
-        });
+      // const gui = new GUI();
+      // gui
+      //   .add(option, "threshold", 0.0001, 0.1)
+      //   .step(0.0001)
+      //   .onChange((value) => {
+      //     if(customMat) {
+      //       customMat.uniforms.threshold.value = value;
+      //     }
+      //   });
 
       // 创建线框效果
       effect = new OutlineEffect(renderer, {
@@ -360,7 +376,6 @@ export default {
         objects.forEach((obj) => {
           scene.add(obj);
         });
-
         scene.remove(intersections[0].object.userData.parent);
         scene_selectObjects.add(intersections[0].object.userData.parent);
       }
@@ -374,14 +389,20 @@ export default {
       tickId = requestAnimationFrame(this.animate);
       // 更新control状态
       controls.update();
-      // 每帧渲染
+
+      // 保证渲染顺序skyboxBack->objects->skyboxFront
+      // 渲染skboxback
       renderer.render(scene, camera);
       renderer.autoClear = false;
+
       // 渲染描边物体
       effect.autoClear = renderer.autoClear;
       effect.render(scene_selectObjects, camera);
+
+      // 渲染skyboxfront
+      renderer.render(scene_front, camera);
       renderer.autoClear = true;
-      effect.autoClear = renderer.autoClear;
+      effect.autoClear = true;
     },
     // 清空场景
     destroy() {
