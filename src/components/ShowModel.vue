@@ -32,6 +32,7 @@ let camera,
 
 const option = {
   maskImageUrl: 'https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/MaskImages/2022_10_31_2px.png',
+  model: 'xyj'
 };
 export default {
   props: {
@@ -111,7 +112,7 @@ export default {
 
 
 
-   
+
 
 
       // 添加WebGLRenderer，设置size
@@ -148,14 +149,37 @@ export default {
           object.position.set(3052 + 430 / 2 + 581 / 2, - 411 * 2 - 180, -600 / 2);
           // object.position.set(0, 0, 0);
           object.rotation.set(0, -Math.PI / 2, 0);
-          object.name = 'newModel';
+          object.name = 'xyj';
           // 添加object到场景里
           scene.add(object);
           objects.push(object);
         }
       );
 
-     
+      // 除湿机
+      loader.load(
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/save_fbx/AJ0261M07-模型.fbx",
+        (object) => {
+          object.traverse((child) => {
+            if (child.isMesh) {
+              child.castShadow = false;
+              child.receiveShadow = false;
+            }
+            child.userData.parent = object;
+          });
+          // 设置object position
+          object.position.set(3052 + 430 / 2 + 581 / 2, - 411 * 2 - 180, -600 / 2 - 100);
+          // object.position.set(0, 0, 0);
+          object.rotation.set(-Math.PI / 2, 0, -Math.PI / 2);
+          object.name = 'csj';
+          object.visible = false;
+          // 添加object到场景里
+          scene.add(object);
+          objects.push(object);
+        }
+      );
+
+
       // px = right
       // nx = left
       // py = top
@@ -315,14 +339,27 @@ export default {
 
       const gui = new GUI();
       gui
-      .add( option, 'maskImageUrl' )
-      .onChange((value) => {
-        console.log(value);
-        if(customMat) {
-          const imageMask = new THREE.TextureLoader().load(value);
-          customMat.uniforms.texMask.value = imageMask;
-        }
-      });
+        .add(option, 'maskImageUrl')
+        .onChange((value) => {
+          console.log(value);
+          if (customMat) {
+            const imageMask = new THREE.TextureLoader().load(value);
+            customMat.uniforms.texMask.value = imageMask;
+          }
+        });
+
+
+      gui
+        .add(option, 'model', ['xyj', 'csj'])
+        .onChange((value) => {
+          objects.forEach((obj) => {
+            if (obj.name === value) {
+              obj.visible = true;
+            } else {
+              obj.visible = false;
+            }
+          });
+        });
 
       // 创建线框效果
       effect = new OutlineEffect(renderer, {
