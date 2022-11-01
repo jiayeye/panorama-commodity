@@ -31,7 +31,7 @@ let camera,
   ;
 
 const option = {
-  threshold: 0.003,
+  maskImageUrl: 'https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/MaskImages/2022_10_31_2px.png',
 };
 export default {
   props: {
@@ -209,7 +209,7 @@ export default {
       // nz = back
       const textures1 = [];
       const px1 = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_r_2022.10.25.png"
+        option.maskImageUrl
       );
       const nx1 = new THREE.TextureLoader().load(
         "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_l.jpg"
@@ -249,13 +249,13 @@ export default {
       function fragmentShader() {
         return `
           uniform sampler2D  tex; 
-          uniform sampler2D  tex1; 
-          uniform float threshold;
+          uniform sampler2D  texMask; 
+          // uniform float threshold;
           varying vec2 vUv;
         
           void main() {
-            vec4 pixel = texture2D(tex1, vUv);
-            // vec4 pixel1 = texture2D(tex1, vUv);
+            vec4 pixelMask = texture2D(texMask, vUv);
+            vec4 pixel = texture2D(tex, vUv);
             //  vec4 temp = pixel1 - pixel;
             //  float alpha = temp.x * temp.x + temp.y * temp.y + temp.z * temp.z;
             //  if(alpha < threshold) {
@@ -265,12 +265,14 @@ export default {
             //   // discard;
             //  }
 
-            // if(pixel.w < 0.95) {
+            // if(pixelMask.w < 0.95) {
             //   discard;
             // }
-            // gl_FragColor = vec4(pixel.xyz, 1);
+            // gl_FragColor = vec4(pixelMask.xyz, 1);
 
-            gl_FragColor = pixel;
+            // use mask alpha and pixel rgb
+            gl_FragColor = vec4(pixel.xyz, pixelMask.w);
+            // gl_FragColor = pixelMask;
           }
         `
       }
@@ -279,8 +281,8 @@ export default {
         if (i === 0) {
           let uniforms = {
             tex: { type: 't', value: textures[i] },
-            tex1: { type: 't', value: textures1[i] },
-            threshold: { value: option.threshold }
+            texMask: { type: 't', value: textures1[i] },
+            // threshold: { value: option.threshold }
           };
           customMat = new THREE.ShaderMaterial({
             uniforms: uniforms,
@@ -299,7 +301,6 @@ export default {
         materials1
       );
       skyboxFront.geometry.scale(1, 1, -1);
-      // scene_selectObjects.add(skyboxFront);
       scene_front.add(skyboxFront);
 
       // const gui = new GUI();
@@ -311,6 +312,17 @@ export default {
       //       customMat.uniforms.threshold.value = value;
       //     }
       //   });
+
+      const gui = new GUI();
+      gui
+      .add( option, 'maskImageUrl' )
+      .onChange((value) => {
+        console.log(value);
+        if(customMat) {
+          const imageMask = new THREE.TextureLoader().load(value);
+          customMat.uniforms.texMask.value = imageMask;
+        }
+      });
 
       // 创建线框效果
       effect = new OutlineEffect(renderer, {
