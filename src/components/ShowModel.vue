@@ -31,7 +31,7 @@ let camera,
   ;
 
 const option = {
-  maskImageUrl: 'https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/MaskImages/2022_10_31_2px.png',
+  maskImageUrl: 'https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/MaskImages/20221107-142314.png',
   model: 'xyj'
 };
 export default {
@@ -295,6 +295,8 @@ export default {
             // gl_FragColor = vec4(pixelMask.xyz, 1);
 
             // use mask alpha and pixel rgb
+            gl_FragColor = vec4(pixelMask.xyz, pixelMask.w);
+
             gl_FragColor = vec4(pixel.xyz, pixelMask.w);
             // gl_FragColor = pixelMask;
           }
