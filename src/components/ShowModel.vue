@@ -31,7 +31,7 @@ let camera,
   ;
 
 const option = {
-  maskImageUrl: 'https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/MaskImages/20221107-142314.png',
+  maskImageUrl: 'https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/MaskImages/20221116.png',
   model: 'xyj'
 };
 export default {
@@ -110,11 +110,6 @@ export default {
       dirLight1.position.set(0, 1000, 1000);
       scene_front.add(dirLight2);
 
-
-
-
-
-
       // 添加WebGLRenderer，设置size
       renderer = new THREE.WebGLRenderer({
         canvas: this.$refs.threeCanvas,
@@ -146,9 +141,10 @@ export default {
             child.userData.parent = object;
           });
           // 设置object position
-          object.position.set(3052 + 430 / 2 + 581 / 2, - 411 * 2 - 180, -600 / 2);
+          object.position.set(3052 + 430 / 2 + 581 / 2, - 411 * 2 -180 + 50, -600 / 2 - 68);
           // object.position.set(0, 0, 0);
           object.rotation.set(0, -Math.PI / 2, 0);
+          object.scale.set(0.9, 0.9, 0.9);
           object.name = 'xyj';
           // 添加object到场景里
           scene.add(object);
@@ -168,7 +164,7 @@ export default {
             child.userData.parent = object;
           });
           // 设置object position
-          object.position.set(3052 + 430 / 2 + 581 / 2, - 411 * 2 - 180, -600 / 2 - 100);
+          object.position.set(3052 + 430 / 2 + 581 / 2, - 411 * 2 -180 + 50, -600 / 2 - 60);
           // object.position.set(0, 0, 0);
           object.rotation.set(-Math.PI / 2, 0, -Math.PI / 2);
           object.name = 'csj';
@@ -188,22 +184,22 @@ export default {
       // nz = back
       const textures = [];
       const px = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_r.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ_HighRes/_r.jpg"
       );
       const nx = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_l.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ_HighRes/_l.jpg"
       );
       const py = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_u.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ_HighRes/_u.jpg"
       );
       const ny = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_d.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ_HighRes/_d.jpg"
       );
       const pz = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_f.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ_HighRes/_f.jpg"
       );
       const nz = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ/_b.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withoutXYJ_HighRes/_b.jpg"
       );
       textures.push(px);
       textures.push(nx);
@@ -222,9 +218,6 @@ export default {
       skyboxBack.geometry.scale(1, 1, -1);
       scene.add(skyboxBack);
 
-
-
-
       // px = right
       // nx = left
       // py = top
@@ -236,19 +229,19 @@ export default {
         option.maskImageUrl
       );
       const nx1 = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_l.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ_HighRes/_l.jpg"
       );
       const py1 = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_u.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ_HighRes/_u.jpg"
       );
       const ny1 = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_d.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ_HighRes/_d.jpg"
       );
       const pz1 = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_f.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ_HighRes/_f.jpg"
       );
       const nz1 = new THREE.TextureLoader().load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ/_b.jpg"
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/withXYJ_HighRes/_b.jpg"
       );
       textures1.push(px1);
       textures1.push(nx1);
@@ -295,9 +288,9 @@ export default {
             // gl_FragColor = vec4(pixelMask.xyz, 1);
 
             // use mask alpha and pixel rgb
-            gl_FragColor = vec4(pixelMask.xyz, pixelMask.w);
-
             gl_FragColor = vec4(pixel.xyz, pixelMask.w);
+
+        
             // gl_FragColor = pixelMask;
           }
         `
