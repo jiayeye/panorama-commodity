@@ -89,33 +89,33 @@ export default {
 
       // 添加光源
       const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
-      hemiLight.position.set(0, 2000, 0);
-      hemiLight.intensity = 0.8;
+      hemiLight.position.set(0, 3000, 0);
+      hemiLight.intensity = 1.15;
       scene.add(hemiLight);
       const hemiLight1 = new THREE.HemisphereLight(0xffffff, 0x444444);
-      hemiLight1.position.set(0, 2000, 0);
-      hemiLight1.intensity = 0.8;
+      hemiLight1.position.set(0, 3000, 0);
+      hemiLight1.intensity = 1.0;
       scene_selectObjects.add(hemiLight1);
       const hemiLight2 = new THREE.HemisphereLight(0xffffff, 0x444444);
-      hemiLight1.position.set(0, 2000, 0);
-      hemiLight1.intensity = 0.8;
+      hemiLight1.position.set(0, 3000, 0);
+      hemiLight1.intensity = 1.25;
       scene_front.add(hemiLight2);
 
       // 设置直射光
       const dirLight = new THREE.DirectionalLight(0xdddddd);
       dirLight.castShadow = false;
-      dirLight.intensity = 0.2;
-      dirLight.position.set(0, 1000, 1000);
+      dirLight.intensity = 0.8;
+      dirLight.position.set(0, 2000, 2000);
       scene.add(dirLight);
       const dirLight1 = new THREE.DirectionalLight(0xdddddd);
       dirLight1.castShadow = false;
-      dirLight1.intensity = 0.2;
-      dirLight1.position.set(0, 1000, 1000);
+      dirLight1.intensity = 0.8;
+      dirLight1.position.set(0, 2000, 2000);
       scene_selectObjects.add(dirLight1);
       const dirLight2 = new THREE.DirectionalLight(0xdddddd);
       dirLight1.castShadow = false;
-      dirLight1.intensity = 0.2;
-      dirLight1.position.set(0, 1000, 1000);
+      dirLight1.intensity = 0.8;
+      dirLight1.position.set(0, 2000, 2000);
       scene_front.add(dirLight2);
 
       // 添加WebGLRenderer，设置size
@@ -183,9 +183,9 @@ export default {
       //   }
       // );
 
-      // 冰箱
+      // 立式空调
       loader.load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/model/bingxiang.FBX",
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/model/lishikongtiao_bai.FBX",
         (object) => {
           const normalObject = this.createNormalizeObject(object);
           object.traverse((child) => {
@@ -198,7 +198,7 @@ export default {
           // 设置object position
           normalObject.position.set(-1620, -700 * 2, 3700);
           normalObject.rotation.set(0, Math.PI / 2, 0);
-          normalObject.name = "bingxiang";
+          normalObject.name = "lishikongtiao";
           normalObject.visible = false;
           // 添加object到场景里
           scene.add(normalObject);
@@ -230,7 +230,7 @@ export default {
 
       // 电视1
       loader.load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/model/TV_ZhiJia.fbx",
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/model/dianshi_zuo.FBX",
         (object) => {
           const normalObject = this.createNormalizeObject(object);
           object.traverse((child) => {
@@ -275,7 +275,7 @@ export default {
 
       // 空调
       loader.load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/model/kongtiao.FBX",
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/model/kongtiao_jin.FBX",
         (object) => {
           const normalObject = this.createNormalizeObject(object);
           object.traverse((child) => {
@@ -364,9 +364,9 @@ export default {
         }
       });
 
-      gui.add(option, "model", ["xiyiji", "bingxiang"]).onChange((value) => {
+      gui.add(option, "model", ["xiyiji", "lishikongtiao"]).onChange((value) => {
         objects.forEach((obj) => {
-          if (obj.name === "xiyiji" || obj.name === "bingxiang") {
+          if (obj.name === "xiyiji" || obj.name === "lishikongtiao") {
             if (obj.name === value) {
               obj.visible = true;
             } else {
