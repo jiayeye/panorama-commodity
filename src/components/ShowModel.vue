@@ -39,6 +39,8 @@ const option = {
   maskImageUrl:
     "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/MaskImages/20221116.png",
   model: "xiyiji",
+  model1: "tv",
+  model2: "chouyouyanji",
 };
 export default {
   props: {
@@ -158,28 +160,28 @@ export default {
       );
 
       // 除湿机
-      loader.load(
-        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/save_fbx/AJ0261M07-模型.fbx",
-        (object) => {
-          const normalObject = this.createNormalizeObject(object);
-          normalObject.traverse((child) => {
-            if (child.isMesh) {
-              child.castShadow = false;
-              child.receiveShadow = false;
-            }
-            child.userData.parent = normalObject;
-          });
-          
-          // 设置object position
-          normalObject.position.set(-1620, -700 * 2, 3700);
-          normalObject.rotation.set(0, Math.PI/2, 0);
-          normalObject.name = "chushiji";
-          normalObject.visible = false;
-          // 添加object到场景里
-          scene.add(normalObject);
-          objects.push(normalObject);
-        }
-      );
+      // loader.load(
+      //   "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/save_fbx/AJ0261M07-模型.fbx",
+      //   (object) => {
+      //     const normalObject = this.createNormalizeObject(object);
+      //     normalObject.traverse((child) => {
+      //       if (child.isMesh) {
+      //         child.castShadow = false;
+      //         child.receiveShadow = false;
+      //       }
+      //       child.userData.parent = normalObject;
+      //     });
+
+      //     // 设置object position
+      //     normalObject.position.set(-1620, -700 * 2, 3700);
+      //     normalObject.rotation.set(0, Math.PI / 2, 0);
+      //     normalObject.name = "chushiji";
+      //     normalObject.visible = false;
+      //     // 添加object到场景里
+      //     scene.add(normalObject);
+      //     objects.push(normalObject);
+      //   }
+      // );
 
       // 冰箱
       loader.load(
@@ -195,8 +197,98 @@ export default {
           });
           // 设置object position
           normalObject.position.set(-1620, -700 * 2, 3700);
-          normalObject.rotation.set(0, Math.PI/2, 0);
+          normalObject.rotation.set(0, Math.PI / 2, 0);
           normalObject.name = "bingxiang";
+          normalObject.visible = false;
+          // 添加object到场景里
+          scene.add(normalObject);
+          objects.push(normalObject);
+        }
+      );
+
+      // 电视
+      loader.load(
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/model/TV.FBX",
+        (object) => {
+          const normalObject = this.createNormalizeObject(object);
+          object.traverse((child) => {
+            if (child.isMesh) {
+              child.castShadow = false;
+              child.receiveShadow = false;
+            }
+            child.userData.parent = normalObject;
+          });
+          // 设置object position
+          normalObject.position.set(2320, -600, 3700);
+          normalObject.rotation.set(0, -Math.PI / 2, 0);
+          normalObject.name = "tv";
+          // 添加object到场景里
+          scene.add(normalObject);
+          objects.push(normalObject);
+        }
+      );
+
+      // 电视1
+      loader.load(
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/model/TV_ZhiJia.fbx",
+        (object) => {
+          const normalObject = this.createNormalizeObject(object);
+          object.traverse((child) => {
+            if (child.isMesh) {
+              child.castShadow = false;
+              child.receiveShadow = false;
+            }
+            child.userData.parent = normalObject;
+          });
+          // 设置object position
+          normalObject.position.set(2220, -700, 3700);
+          normalObject.rotation.set(0, -Math.PI / 2, 0);
+          normalObject.name = "tv1";
+          normalObject.visible = false;
+          // 添加object到场景里
+          scene.add(normalObject);
+          objects.push(normalObject);
+        }
+      );
+
+      // 抽油烟机
+      loader.load(
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/model/chouyouyanji.FBX",
+        (object) => {
+          const normalObject = this.createNormalizeObject(object);
+          object.traverse((child) => {
+            if (child.isMesh) {
+              child.castShadow = false;
+              child.receiveShadow = false;
+            }
+            child.userData.parent = normalObject;
+          });
+          // 设置object position
+          normalObject.position.set(2320, 800, 2150);
+          normalObject.rotation.set(0, -Math.PI / 2, 0);
+          normalObject.name = "chouyouyanji";
+          // 添加object到场景里
+          scene.add(normalObject);
+          objects.push(normalObject);
+        }
+      );
+
+      // 空调
+      loader.load(
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/model/kongtiao.FBX",
+        (object) => {
+          const normalObject = this.createNormalizeObject(object);
+          object.traverse((child) => {
+            if (child.isMesh) {
+              child.castShadow = false;
+              child.receiveShadow = false;
+            }
+            child.userData.parent = normalObject;
+          });
+          // 设置object position
+          normalObject.position.set(2320, 900, 2150);
+          normalObject.rotation.set(0, -Math.PI / 2, 0);
+          normalObject.name = "kongtiao";
           normalObject.visible = false;
           // 添加object到场景里
           scene.add(normalObject);
@@ -255,6 +347,12 @@ export default {
         new THREE.Vector3(0, 0, 3000),
         "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/MaskImages/multi_commodity/keting.png"
       );
+
+      this.createPlane(
+        "right",
+        new THREE.Vector3(2000, 0, 0),
+        "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/MaskImages/multi_commodity/frontMask.png"
+      );
       // scene_front.add(skyboxFront);
 
       const gui = new GUI();
@@ -266,17 +364,41 @@ export default {
         }
       });
 
-      gui
-        .add(option, "model", ["xiyiji", "chushiji", "bingxiang"])
-        .onChange((value) => {
-          objects.forEach((obj) => {
+      gui.add(option, "model", ["xiyiji", "bingxiang"]).onChange((value) => {
+        objects.forEach((obj) => {
+          if (obj.name === "xiyiji" || obj.name === "bingxiang") {
             if (obj.name === value) {
               obj.visible = true;
             } else {
               obj.visible = false;
             }
-          });
+          }
         });
+      });
+
+      gui.add(option, "model1", ["tv", "tv1"]).onChange((value) => {
+        objects.forEach((obj) => {
+          if (obj.name === "tv" || obj.name === "tv1") {
+            if (obj.name === value) {
+              obj.visible = true;
+            } else {
+              obj.visible = false;
+            }
+          }
+        });
+      });
+
+      gui.add(option, "model2", ["chouyouyanji", "kongtiao"]).onChange((value) => {
+        objects.forEach((obj) => {
+          if (obj.name === "chouyouyanji" || obj.name === "kongtiao") {
+            if (obj.name === value) {
+              obj.visible = true;
+            } else {
+              obj.visible = false;
+            }
+          }
+        });
+      });
 
       // 创建线框效果
       effect = new OutlineEffect(renderer, {
@@ -365,21 +487,58 @@ export default {
         plane.scale.set(position.z * 2, position.z * 2, position.z * 2);
         scene_front.add(plane);
 
-        // const nx = new THREE.TextureLoader().load(
-        //   "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/bg_multi_HighRes/_l.jpg"
-        // );
-        // const py = new THREE.TextureLoader().load(
-        //   "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/bg_multi_HighRes/_u.jpg"
-        // );
-        // const ny = new THREE.TextureLoader().load(
-        //   "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/bg_multi_HighRes/_d.jpg"
-        // );
-        // const pz = new THREE.TextureLoader().load(
-        //   "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/bg_multi_HighRes/_f.jpg"
-        // );
-        // const nz = new THREE.TextureLoader().load(
-        //   "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/bg_multi_HighRes/_b.jpg"
-        // );
+      }else if(direction === 'right') {
+        const maskUrl = new THREE.TextureLoader().load(url);
+        const backUrl = new THREE.TextureLoader().load(
+          "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/bg_multi_HighRes/_r.jpg"
+        );
+        function vertexShader() {
+          return `
+          varying vec2 vUv;
+
+          void main() {
+            vUv = uv;
+
+            vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
+            gl_Position = projectionMatrix * modelViewPosition;
+          }
+        `;
+        }
+
+        function fragmentShader() {
+          return `
+          uniform sampler2D  tex;
+          uniform sampler2D  texMask;
+          // uniform float threshold;
+          varying vec2 vUv;
+
+          void main() {
+            vec4 pixelMask = texture2D(texMask, vUv);
+            vec4 pixel = texture2D(tex, vUv);
+            gl_FragColor = vec4(pixel.xyz, pixelMask.w);
+          }
+        `;
+        }
+
+        let uniforms = {
+          tex: { type: "t", value: backUrl },
+          texMask: { type: "t", value: maskUrl },
+          // threshold: { value: option.threshold }
+        };
+        customMat = new THREE.ShaderMaterial({
+          uniforms: uniforms,
+          fragmentShader: fragmentShader(),
+          vertexShader: vertexShader(),
+        });
+
+        // 设置半透明模式
+        customMat.transparent = true;
+
+        const plane = new THREE.Mesh(new THREE.PlaneGeometry(), customMat);
+        plane.rotation.set(0, -Math.PI/2, 0);
+        plane.position.set(position.x, position.y, position.z);
+        plane.scale.set(position.x * 2, position.x * 2, position.x * 2);
+        scene_front.add(plane);
       }
     },
 
