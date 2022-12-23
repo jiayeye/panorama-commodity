@@ -1,0 +1,86 @@
+[
+    {
+        "uuid": "1234567890abcdefg",
+        "house_name": "xxxx_house",
+        "room_name": "客厅",
+        "plane_id": "B",
+        "master_url": "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/picture/21_2_b.png",
+        "slave_url": "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/mock/%E6%A8%A1%E5%9E%8B%E9%80%9A%E9%81%93_b_L3D326S41ENDPZV4EJAUWJUR4LUF3P3XU888.0.png",
+        "app_id_list": [
+            {
+                "sku_id": "abcdefghi",
+                "type": "洗衣机",
+                "boundingPoints": [
+                    {
+                        "x": 0.6905150241977087,
+                        "y": 0.5840066457620544
+                    },
+                    {
+                        "x": 0.6905150241977087,
+                        "y": 0.7271694789227052
+                    },
+                    {
+                        "x": 0.8262993181536485,
+                        "y": 0.5840066457620544
+                    },
+                    {
+                        "x": 0.8262993181536485,
+                        "y": 0.7271694789227052
+                    }
+                ]
+            },
+            {
+                "sku_id": "abcdefghj",
+                "type": "空调",
+                "boundingPoints": [
+                    {
+                        "x": -0.20087372128550385,
+                        "y": 0.15126713041547557
+                    },
+                    {
+                        "x": -0.20087372128550385,
+                        "y": 0.32547993019197197
+                    },
+                    {
+                        "x": 0.06818076835097686,
+                        "y": 0.15126713041547557
+                    },
+                    {
+                        "x": 0.06818076835097686,
+                        "y": 0.32547993019197197
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "uuid": "1234567890abcdefg",
+        "house_name": "xxxx_house",
+        "room_name": "客厅",
+        "plane_id": "R",
+        "master_url": "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/mock/%E6%A8%A1%E5%9E%8B%E9%80%9A%E9%81%93_r_L3D326S41ENDPZV4EJAUWJUR4LUF3P3XU888.0.png",
+        "slave_url": "https://syn-yf-design-tool.oss-cn-beijing.aliyuncs.com/panorama/commodity/mock/%E6%A8%A1%E5%9E%8B%E9%80%9A%E9%81%93_r_L3D326S41ENDPZ3EJTQUWL3SYLUF3P3XC888.0.png",
+        "app_id_list": [ {
+            "sku_id": "abcdefghj",
+            "type": "空调",
+            "boundingPoints": [
+                {
+                    "x": 0.8566976366890516,
+                    "y": 0.2304118498147255
+                },
+                {
+                    "x": 0.8566976366890516,
+                    "y": 0.3135185169792934
+                },
+                {
+                    "x": 1.078945960895037,
+                    "y": 0.2304118498147255
+                },
+                {
+                    "x": 1.078945960895037,
+                    "y": 0.3135185169792934
+                }
+            ]
+        }]
+    }
+]
