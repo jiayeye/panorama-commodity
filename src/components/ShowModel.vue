@@ -116,7 +116,11 @@ export default {
       controls.autoRotate = false;
       controls.autoRotateSpeed = 1.0;
       controls.enablePan = false;
-      controls.target.set(0, 0, -0.01);
+      // 朝后
+      // controls.target.set(0, 0, 1.0);
+      // 朝右
+      controls.target.set(1.0, 0, 0);
+      camera.updateProjectionMatrix();
       // 加载进度manager
       const manager = new THREE.LoadingManager();
       const loader = new FBXLoader(manager);
@@ -147,7 +151,7 @@ export default {
 
           // 计算2d包围盒
           // const points = this.getBoundingbox2D(normalObject, camera);
-          // console.log('back-洗衣机:'+points);
+          // console.log('back-洗衣机:');
           // console.log(points);
         }
       );
@@ -254,6 +258,7 @@ export default {
           normalObject.position.set(2320, 800, 2150);
           normalObject.rotation.set(0, -Math.PI / 2, 0);
           normalObject.name = "chouyouyanji";
+          normalObject.visible = false;
           // 添加object到场景里
           scene.add(normalObject);
           objects.push(normalObject);
@@ -275,15 +280,17 @@ export default {
           normalObject.position.set(2320, 900, 2150);
           normalObject.rotation.set(0, -Math.PI / 2, 0);
           normalObject.name = "kongtiao";
-          normalObject.visible = false;
+          normalObject.visible = true;
           // 添加object到场景里
           scene.add(normalObject);
           objects.push(normalObject);
 
+          // 相机朝后
+          // controls.target.set(0, 0, 0.1);
           // 相机朝右
-          controls.target.set(0.1, 0, 0);
-          controls.update();
-          camera.updateProjectionMatrix();
+          // controls.target.set(0.0, 0, 1.0);
+          // controls.update();
+          // camera.updateProjectionMatrix();
 
           // 计算2d包围盒
           const points = this.getBoundingbox2D(normalObject, camera);
@@ -553,11 +560,11 @@ export default {
 
       const min = new THREE.Vector2(+Infinity, +Infinity);
       const max = new THREE.Vector2(-Infinity, -Infinity);
-
+      debugger;
       points.forEach((point) => {
         const ndcPoint = point.project(camera);
-        const tempX = (ndcPoint.x + 1) / 2;
-        const tempY = -(ndcPoint.y - 1) / 2;
+        const tempX = (ndcPoint.x + 1) * 0.5;
+        const tempY = -(ndcPoint.y - 1) * 0.5;
 
         min.x = tempX < min.x ? tempX : min.x;
         min.y = tempY < min.y ? tempY : min.y;
